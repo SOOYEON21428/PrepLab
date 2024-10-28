@@ -1,18 +1,25 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, Image, StyleSheet, Animated } from 'react-native';
 
-interface Props {
-  navigation: any; // navigation prop의 타입을 정의
-}
+const SplashScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const translateX = useRef(new Animated.Value(0)).current;
 
-const SplashScreen: React.FC<Props> = ({ navigation }) => {
+  useEffect(() => {
+    Animated.timing(translateX, {
+      toValue: 0,
+      duration: 3000,
+      useNativeDriver: true,
+    }).start(() => {
+      navigation.navigate('Home');
+    });
+  }, [navigation, translateX]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>필가이드</Text>
-      <Text style={styles.subtitle}>PREP LAB</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.button}>
-        <Text style={styles.buttonText}>이메일로 시작하기</Text>
-      </TouchableOpacity>
+      <Animated.View style={{ transform: [{ translateX }] }}>
+        <Text style={styles.title}>필가이드</Text>
+        <Text style={styles.subtitle}>PREP LAB</Text>
+      </Animated.View>
     </View>
   );
 };
@@ -38,15 +45,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#B0B0B0',
   },
-  button: {
+  buttonContainer: {
+    flexDirection: 'row',
     marginTop: 30,
-    backgroundColor: '#6BBF8A',
-    padding: 10,
-    borderRadius: 5,
   },
-  buttonText: {
-    color: 'white',
+  loginText: {
+    color: '#6BBF8A',
     fontSize: 16,
+    marginHorizontal: 10,
   },
 });
 
