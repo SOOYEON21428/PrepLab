@@ -15,7 +15,7 @@ const App: React.FC = () => {
         <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ title: '이메일 로그인' }} />
-        <Stack.Screen name="Join" component={Join} options={{title: '회원가입'}} />
+        <Stack.Screen name="Join" component={Join} options={{title: '이메일로 회원가입'}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
