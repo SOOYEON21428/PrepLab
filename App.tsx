@@ -7,6 +7,8 @@ import Login from './src/screens/Login';
 import Join from './src/screens/Join';
 import FindId from './src/screens/FindId';
 import FindPassword from './src/screens/FindPassword';
+import Main from './src/screens/Main';
+import Search from './src/screens/Search';
 
 type RootStackParamList = {
   Splash: undefined;
@@ -15,6 +17,8 @@ type RootStackParamList = {
   Join: undefined;
   FindId: undefined;
   FindPassword: undefined;
+  Main: undefined;
+  Search: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -29,6 +33,8 @@ const App: React.FC = () => {
         <Stack.Screen name="Join" component={Join} options={{ title: '이메일로 회원가입' }} />
         <Stack.Screen name="FindId" component={FindId} options={{ title: '아이디 찾기' }} />
         <Stack.Screen name="FindPassword" component={FindPassword} options={{ title: '비밀번호 찾기' }} />
+        <Stack.Screen name="Main" component={Main} options={{headerShown: false}} />
+        <Stack.Screen name="Search" component={Search} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

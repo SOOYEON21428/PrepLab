@@ -16,7 +16,7 @@ const Login: React.FC<{ navigation: any }> = ({ navigation }) => {
   const handleLogin = () => {
     if (emailValid && password) {
       Alert.alert('로그인 성공', `이메일: ${email}, 비밀번호: ${password}`);
-      // 로그인 로직 추가
+      navigation.navigate('Main');
     } else {
       Alert.alert('로그인 실패', '유효한 이메일과 비밀번호를 입력하세요.');
     }
@@ -24,7 +24,6 @@ const Login: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      
       <TextInput
         style={[styles.input, emailValid ? styles.validInput : styles.invalidInput]}
         placeholder="이메일"
