@@ -113,13 +113,13 @@ const Join: React.FC<{ navigation: any }> = ({ navigation }) => {
         if (verificationValid) setStep(8);
         else Alert.alert('인증번호가 틀렸어요.');
         break;
-      case 8:
+        case 8:
         setStep(9);
         break;
       case 9:
         if (terms.every(term => term.checked || term.text.includes('[선택]'))) {
           Alert.alert('회원가입 완료', `입력한 이메일: ${email}, 이름: ${name}, 생년월일: ${birthdate}, 성별: ${gender}, 휴대폰 번호: ${phoneNumber}`);
-          navigation.navigate('Login'); // Navigate to the Login screen
+          navigation.navigate('Login');
         } else {
           Alert.alert('필수 약관에 동의해 주세요.');
         }
@@ -271,31 +271,24 @@ const Join: React.FC<{ navigation: any }> = ({ navigation }) => {
         </>
       )}
 
-      {step === 8 && (
+{step === 8 && (
         <>
           <Text style={styles.subtitle}>
             입력한 정보를 확인해 주세요
           </Text>
-          <TextInput
-            style={styles.input}
-            value={phoneNumber}
-            editable={false}
-          />
-          <TextInput
-            style={styles.input}
-            value={gender}
-            editable={false}
-          />
-          <TextInput
-            style={styles.input}
-            value={birthdate}
-            editable={false}
-          />
-          <TextInput
-            style={styles.input}
-            value={name}
-            editable={false}
-          />
+          <View style={styles.infoContainer}>
+            <Text style={styles.infoText}>휴대폰 번호</Text>
+            <Text style={styles.input}>{phoneNumber}</Text>
+
+            <Text style={styles.infoText}>성별</Text>
+            <Text style={styles.input}>{gender}</Text>
+
+            <Text style={styles.infoText}>생년월일</Text>
+            <Text style={styles.input}>{birthdate}</Text>
+
+            <Text style={styles.infoText}>이름</Text>
+            <Text style={styles.input}>{name}</Text>
+          </View>
         </>
       )}
 
@@ -375,6 +368,15 @@ const styles = StyleSheet.create({
     color: 'black',
     marginBottom: 20,
     alignSelf: 'flex-start',
+  },
+  infoContainer: {
+    width: '100%',
+    marginBottom: 20,
+  },
+  infoText: {
+    fontSize: 14,
+    color: 'black',
+    marginBottom: 5,
   },
   greenText: {
     color: '#6BBF8A',
