@@ -52,7 +52,24 @@ const Login: React.FC<{ navigation: any }> = ({ navigation }) => {
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonText}>로그인</Text>
         </TouchableOpacity>
-        <Text style={styles.link}>아이디 찾기 | 비밀번호 찾기 | 회원가입</Text>
+        
+        <View style={styles.linksContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate('FindId')}>
+            <Text style={styles.link}>아이디 찾기</Text>
+          </TouchableOpacity>
+          
+          <Text style={styles.separator}>|</Text>
+          
+          <TouchableOpacity onPress={() => navigation.navigate('FindPassword')}>
+            <Text style={styles.link}>비밀번호 찾기</Text>
+          </TouchableOpacity>
+          
+          <Text style={styles.separator}>|</Text>
+          
+          <TouchableOpacity onPress={() => navigation.navigate('Join')}>
+            <Text style={styles.link}>회원가입</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -61,7 +78,7 @@ const Login: React.FC<{ navigation: any }> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',  // 상단으로 정렬
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'white',
     padding: 20,
@@ -71,7 +88,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#6BBF8A',
     marginBottom: 20,
-    marginTop: 50, 
+    marginTop: 50,
   },
   input: {
     width: '100%',
@@ -107,8 +124,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
-  link: {
+  linksContainer: {
+    flexDirection: 'row',
     marginTop: 20,
+  },
+  link: {
+    color: '#6BBF8A',
+  },
+  separator: {
+    marginHorizontal: 10,
     color: '#6BBF8A',
   },
 });
