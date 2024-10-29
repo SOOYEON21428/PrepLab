@@ -1,4 +1,3 @@
-// src/screens/FindId.tsx
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -69,7 +68,7 @@ const FindId: React.FC<FindIdProps> = ({ navigation }) => {
 
       {step === 3 && (
         <View style={styles.resultContainer}>
-          <Text style={styles.resultTitle}>휴대폰 번호와 일치하는 아이디입니다.</Text>
+          <Text style={styles.resultTitle}>휴대폰 번호와 일치하는 <Text style={styles.highlight}>아이디</Text>입니다.</Text>
           <View style={styles.resultBox}>
             <Text style={styles.resultLabel}>아이디</Text>
             <Text style={styles.resultText}>{email}</Text>
@@ -89,11 +88,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F7F7F7',
   },
   title: {
     fontSize: 18,
     marginBottom: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   input: {
     width: '100%',
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
     borderColor: '#B0B0B0',
     borderRadius: 5,
     marginBottom: 20,
+    backgroundColor: '#FFFFFF',
   },
   button: {
     backgroundColor: '#6BBF8A',
@@ -113,36 +115,49 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+    fontWeight: 'bold',
   },
   resultContainer: {
     alignItems: 'center',
     padding: 20,
     width: '100%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   resultTitle: {
     fontSize: 18,
     marginBottom: 20,
     textAlign: 'center',
   },
+  highlight: {
+    color: '#6BBF8A',
+    fontWeight: 'bold',
+  },
   resultBox: {
     padding: 15,
-    backgroundColor: '#EAEAEA',
-    borderRadius: 5,
+    backgroundColor: '#F0F5F0',
+    borderRadius: 10,
     marginBottom: 20,
     width: '100%',
     alignItems: 'center',
   },
   resultLabel: {
-    fontSize: 16,
-    color: '#6BBF8A',
-    marginBottom: 10,
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 5,
   },
   resultText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
+    color: '#333',
   },
   secondaryButton: {
-    backgroundColor: '#A0D8B8',
+    backgroundColor: '#6BBF8A',
     padding: 15,
     borderRadius: 30,
     alignItems: 'center',
@@ -151,6 +166,7 @@ const styles = StyleSheet.create({
   secondaryButtonText: {
     color: 'white',
     fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
