@@ -7,7 +7,7 @@ const SplashScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   useEffect(() => {
     Animated.timing(translateX, {
       toValue: 0,
-      duration: 3000,
+      duration: 1800,
       useNativeDriver: true,
     }).start(() => {
       navigation.navigate('Home');
