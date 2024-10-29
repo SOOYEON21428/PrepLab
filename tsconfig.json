@@ -1,9 +1,9 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "strict": true,  // 엄격한 타입 검사를 활성화합니다.
-    "skipLibCheck": true, // 라이브러리 타입 검사를 건너뜁니다.
-    "forceConsistentCasingInFileNames": true // 파일 이름의 대소문자 일관성을 강제합니다.
+    "strict": true,  
+    "skipLibCheck": true, 
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules"]
 }
