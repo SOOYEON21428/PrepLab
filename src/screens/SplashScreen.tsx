@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Image, StyleSheet, Animated } from 'react-native';
+import { View, Text, StyleSheet, Animated } from 'react-native';
 
 const SplashScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const translateX = useRef(new Animated.Value(0)).current;

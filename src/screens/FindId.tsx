@@ -68,15 +68,16 @@ const FindId: React.FC<FindIdProps> = ({ navigation }) => {
       )}
 
       {step === 3 && (
-        <>
-          <Text style={styles.title}>휴대폰 번호와 일치하는 아이디입니다.</Text>
+        <View style={styles.resultContainer}>
+          <Text style={styles.resultTitle}>휴대폰 번호와 일치하는 아이디입니다.</Text>
           <View style={styles.resultBox}>
+            <Text style={styles.resultLabel}>아이디</Text>
             <Text style={styles.resultText}>{email}</Text>
           </View>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-            <Text style={styles.buttonText}>돌아가기</Text>
+          <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.goBack()}>
+            <Text style={styles.secondaryButtonText}>비밀번호 찾기</Text>
           </TouchableOpacity>
-        </>
+        </View>
       )}
     </View>
   );
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#FFFFFF',
   },
   title: {
     fontSize: 18,
@@ -112,13 +114,42 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
+  resultContainer: {
+    alignItems: 'center',
+    padding: 20,
+    width: '100%',
+  },
+  resultTitle: {
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
   resultBox: {
     padding: 15,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#EAEAEA',
     borderRadius: 5,
     marginBottom: 20,
+    width: '100%',
+    alignItems: 'center',
+  },
+  resultLabel: {
+    fontSize: 16,
+    color: '#6BBF8A',
+    marginBottom: 10,
   },
   resultText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  secondaryButton: {
+    backgroundColor: '#A0D8B8',
+    padding: 15,
+    borderRadius: 30,
+    alignItems: 'center',
+    width: '100%',
+  },
+  secondaryButtonText: {
+    color: 'white',
     fontSize: 16,
   },
 });
