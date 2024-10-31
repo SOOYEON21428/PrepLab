@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { View, Image, StyleSheet, Animated } from 'react-native';
 
 const SplashScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const translateX = useRef(new Animated.Value(0)).current;
@@ -7,7 +7,7 @@ const SplashScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   useEffect(() => {
     Animated.timing(translateX, {
       toValue: 0,
-      duration: 1800,
+      duration: 1500,
       useNativeDriver: true,
     }).start(() => {
       navigation.navigate('Home');
@@ -17,8 +17,8 @@ const SplashScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Animated.View style={{ transform: [{ translateX }] }}>
-        <Text style={styles.title}>필가이드</Text>
-        <Text style={styles.subtitle}>PREP LAB</Text>
+        <Image source={require('../../assets/png/Asset2.png')} style={styles.logo} />
+        <Image source={require('../../assets/CI/PrepLogo.png')} style={styles.subtitleLogo} />
       </Animated.View>
     </View>
   );
@@ -36,23 +36,9 @@ const styles = StyleSheet.create({
     height: 100,
     marginBottom: 20,
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#6BBF8A',
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#B0B0B0',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    marginTop: 30,
-  },
-  loginText: {
-    color: '#6BBF8A',
-    fontSize: 16,
-    marginHorizontal: 10,
+  subtitleLogo: {
+    width: 100,
+    height: 20,
   },
 });
 
