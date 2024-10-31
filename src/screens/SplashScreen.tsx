@@ -27,18 +27,21 @@ const SplashScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'white',
   },
   logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
+    width: 150,
+    height: 134.9,
+    position: 'absolute',
+    top: 194,
+    left: 136,
   },
   subtitleLogo: {
-    width: 100,
-    height: 20,
+    width: 88,
+    height: 18,
+    position: 'absolute',
+    top: 656,
+    left: 166,
   },
 });
 
