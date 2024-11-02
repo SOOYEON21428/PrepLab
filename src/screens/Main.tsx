@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import NavigationBar from '../components/NavigationBar'; // NavigationBar 경로 확인
 
 const Main: React.FC = () => {
   const navigation = useNavigation();
+  const [activeItem, setActiveItem] = useState('의약품');
+
+  const handleSelect = (item: string) => {
+    setActiveItem(item);
+    // 필요한 경우, item에 따라 다른 화면으로 이동하는 로직 추가
+    // if (item === '복약 달력') navigation.navigate('Calendar');
+  };
 
   return (
     <View style={styles.container}>
@@ -14,7 +22,7 @@ const Main: React.FC = () => {
             <TextInput
               style={styles.searchInput}
               placeholder="어떤 의약품/영양제를 찾으세요?"
-              editable={false} // Prevent direct editing to enforce navigation
+              editable={false}
             />
           </TouchableOpacity>
         </View>
@@ -91,13 +99,7 @@ const Main: React.FC = () => {
         </View>
       </ScrollView>
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>의약품</Text>
-        <Text style={styles.footerText}>복약 달력</Text>
-        <Text style={styles.footerText}>구급함</Text>
-        <Text style={styles.footerText}>주변 약국</Text>
-        <Text style={styles.footerText}>내 정보</Text>
-      </View>
+      <NavigationBar activeItem={activeItem} onSelect={handleSelect} />
     </View>
   );
 };
@@ -214,20 +216,6 @@ const styles = StyleSheet.create({
   healthText: {
     fontSize: 16,
     textAlign: 'center',
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: 10,
-    backgroundColor: '#d1c4e9',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  footerText: {
-    fontSize: 16,
   },
 });
 
