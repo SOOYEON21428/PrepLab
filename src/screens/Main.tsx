@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import NavigationBar from '../components/NavigationBar'; // NavigationBar 경로 확인
+import NavigationBar from '../components/NavigationBar';
 
 const Main: React.FC = () => {
   const navigation = useNavigation();
@@ -9,8 +9,7 @@ const Main: React.FC = () => {
 
   const handleSelect = (item: string) => {
     setActiveItem(item);
-    // 필요한 경우, item에 따라 다른 화면으로 이동하는 로직 추가
-    // if (item === '복약 달력') navigation.navigate('Calendar');
+   
   };
 
   return (
