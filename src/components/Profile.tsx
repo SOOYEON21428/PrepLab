@@ -49,4 +49,4 @@ const ProfileName = styled.div`
 const ProfileAge = styled.div`
   font-size: 14px;
   color: #888;
-`;
+`;//
