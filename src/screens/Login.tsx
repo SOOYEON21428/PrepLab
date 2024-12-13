@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   togglePassword: {
     color: '#6BBF8A',
     marginBottom: 20,
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-end',//
   },
   footer: {
     width: '100%',
