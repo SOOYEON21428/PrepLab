@@ -1,18 +1,38 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Image } from 'react-native';
 
 const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const translateX = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(translateX, {
+      toValue: 0,
+      duration: 1500,
+      useNativeDriver: true,
+    }).start(() => {
+      navigation.navigate('Home');
+    });
+  }, [navigation, translateX]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>필가이드</Text>
+      <Animated.View style={{ transform: [{ translateX }] }}>
+        <Image source={require('../../assets/png/Asset2.png')} style={styles.logo} />
+      </Animated.View>
       <View style={styles.iconContainer}>
-        <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.iconText}>로그인</Text>
+        <TouchableOpacity style={styles.socialIcon}>
+          <Text style={styles.socialIconText}>💬</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('Join')}>
-          <Text style={styles.iconText}>회원가입</Text>
+        <TouchableOpacity style={styles.socialIcon}>
+          <Text style={styles.socialIconText}>N</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialIcon}>
+          <Text style={styles.socialIconText}>G</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.buttonText}>이메일로 시작하기</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -24,42 +44,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  bubble: {
-    backgroundColor: '#4A90E2',
-    borderRadius: 50,
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 50,
-    right: 30,
-  },
-  bubbleText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#6BBF8A',
-    marginVertical: 20,
+  logo: {
+    width: 150, // 로고 너비
+    height: 150, // 로고 높이
+    resizeMode: 'contain',
+    marginBottom: 240, // 로고와 SNS 아이콘 사이의 간격 추가
   },
   iconContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '60%',
+    marginBottom: 20,
   },
-  icon: {
+  socialIcon: {
     backgroundColor: '#F0F0F0',
     padding: 10,
-    borderRadius: 5,
-    width: '45%',
+    borderRadius: 50,
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  socialIconText: {
+    fontSize: 20,
+  },
+  button: {
+    backgroundColor: '#6EAF7C',
+    padding: 15,
+    borderRadius: 35,
+    width: '60%',
     alignItems: 'center',
   },
-  iconText: {
-    color: '#6BBF8A',
+  buttonText: {
+    color: 'white',
     fontSize: 16,
   },
 });
