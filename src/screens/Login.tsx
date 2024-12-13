@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     borderColor: '#6BBF8A',
   },
   invalidInput: {
-    borderColor: 'red',
+    borderColor: 'green',
   },
   togglePassword: {
     color: '#6BBF8A',
