@@ -52,13 +52,7 @@ const Login: React.FC<{ navigation: any }> = ({ navigation }) => {
           <Text style={styles.buttonText}>로그인</Text>
         </TouchableOpacity>
         
-        <View style={styles.linksContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('FindId')}>
-            <Text style={styles.link}>아이디 찾기</Text>
-          </TouchableOpacity>
-          
-          <Text style={styles.separator}>|</Text>
-          
+        <View style={styles.linksContainer}>          
           <TouchableOpacity onPress={() => navigation.navigate('FindPassword')}>
             <Text style={styles.link}>비밀번호 찾기</Text>
           </TouchableOpacity>
