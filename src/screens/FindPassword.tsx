@@ -14,6 +14,7 @@ const FindPassword: React.FC<FindPasswordProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [timer, setTimer] = useState(180);
   const [timerRunning, setTimerRunning] = useState(false);
 
@@ -41,6 +42,7 @@ const FindPassword: React.FC<FindPasswordProps> = ({ navigation }) => {
     setTimer(180);
     setTimerRunning(false);
     setEmail('');
+    setVerificationCode('');
   };
 
   const validateEmail = (email: string) => {
@@ -52,7 +54,7 @@ const FindPassword: React.FC<FindPasswordProps> = ({ navigation }) => {
     if (validateEmail(email)) {
       setStep(2);
       setTimerRunning(true);
-      Keyboard.dismiss(); // Dismiss the keyboard
+      Keyboard.dismiss();
     } else {
       Alert.alert('오류', '올바른 이메일 형식을 입력해주세요.');
     }
@@ -62,17 +64,26 @@ const FindPassword: React.FC<FindPasswordProps> = ({ navigation }) => {
     if (verificationCode === '123456') {
       setStep(3);
       setTimerRunning(false);
+      Keyboard.dismiss();
     } else {
       Alert.alert('오류', '인증번호가 올바르지 않습니다.');
     }
   };
 
-  const handleResetPassword = () => {
-    if (newPassword) {
-      Alert.alert('성공', '비밀번호가 성공적으로 변경되었습니다.');
-      navigation.goBack();
+  const handleNewPasswordSubmit = () => {
+    if (newPassword.length >= 8) {
+      setStep(4);
+      Keyboard.dismiss();
     } else {
-      Alert.alert('오류', '새 비밀번호를 입력해주세요.');
+      Alert.alert('오류', '비밀번호는 8자리 이상이어야 합니다.');
+    }
+  };
+
+  const handleResetPassword = () => {
+    if (newPassword === confirmPassword) {
+      setStep(5);
+    } else {
+      Alert.alert('오류', '비밀번호가 일치하지 않습니다.');
     }
   };
 
@@ -89,7 +100,7 @@ const FindPassword: React.FC<FindPasswordProps> = ({ navigation }) => {
 
       {step === 1 && (
         <>
-          <Text style={styles.title}>이메일을 입력해주세요</Text>
+          <Text style={styles.title}><Text style={styles.highlight}>이메일</Text>을 입력해주세요</Text>
           <TextInput
             style={styles.input}
             placeholder="이메일"
@@ -104,36 +115,72 @@ const FindPassword: React.FC<FindPasswordProps> = ({ navigation }) => {
 
       {step === 2 && (
         <>
-          <Text style={styles.title}>인증번호를 입력해주세요</Text>
+          <Text style={styles.title}><Text style={styles.highlight}>인증번호</Text>를 입력해주세요</Text>
           <TextInput
             style={styles.input}
             placeholder="인증번호 6자리"
             value={verificationCode}
             onChangeText={setVerificationCode}
             keyboardType="numeric"
+            returnKeyType="done"
+            onSubmitEditing={handleVerify}
           />
-          <Text style={styles.timer}>{formatTimer(timer)}</Text>
-          <TouchableOpacity style={styles.button} onPress={handleVerify}>
-            <Text style={styles.buttonText}>인증</Text>
+          <View style={styles.timerContainer}>
+            <Text style={styles.timer}>{formatTimer(timer)}</Text>
+          </View>
+          <TouchableOpacity style={styles.resendButton}>
+            <Text style={styles.resendText}>인증번호 재요청</Text>
           </TouchableOpacity>
-          <Text style={styles.email}>아이디: {email}</Text>
+          <Text style={styles.emailLabel}>아이디</Text>
+          <TextInput
+            style={styles.emailInput}
+            value={email}
+            editable={false}
+          />
         </>
       )}
 
       {step === 3 && (
         <>
-          <Text style={styles.title}>비밀번호를 재설정 해주세요</Text>
+          <Text style={styles.title}><Text style={styles.highlight}>비밀번호</Text>를 재설정 해주세요</Text>
           <TextInput
             style={styles.input}
             placeholder="영어, 숫자, 특수문자 포함 8자리 이상"
             value={newPassword}
             onChangeText={setNewPassword}
             secureTextEntry
+            returnKeyType="done"
+            onSubmitEditing={handleNewPasswordSubmit}
           />
-          <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-            <Text style={styles.buttonText}>비밀번호 재설정</Text>
-          </TouchableOpacity>
         </>
+      )}
+
+      {step === 4 && (
+        <>
+          <Text style={styles.title}>
+            <Text style={styles.highlight}>비밀번호</Text> 확인을 위해{'\n'}한번 더 입력해주세요{'\n'}
+          </Text>          
+          <TextInput
+            style={styles.input}
+            placeholder="비밀번호 재입력"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry
+            returnKeyType="done"
+            onSubmitEditing={handleResetPassword}
+          />
+        </>
+      )}
+
+      {step === 5 && (
+        <View style={styles.centeredContainer}>
+          <Text style={styles.title}>
+            <Text style={styles.highlight}>비밀번호 재설정</Text>이{'\n'}완료되었습니다.{'\n'}
+          </Text>        
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>로그인하러 가기</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </View>
   );
@@ -143,12 +190,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#FFFFFF',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   headerText: {
     fontSize: 18,
@@ -158,6 +205,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     marginBottom: 20,
+    color: '#000000',
+    textAlign: 'center', // 텍스트 중앙 정렬
+  },
+  highlight: {
     color: '#6EAF7C',
   },
   input: {
@@ -174,21 +225,55 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     width: '100%',
+    marginTop: 20,
+  },
+  buttonNext: {
+    backgroundColor: '#E0E0E0',
+    padding: 15,
+    borderRadius: 30,
+    alignItems: 'center',
+    width: '100%',
+    marginTop: 20,
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
+    textAlign: 'center', // 버튼 텍스트 중앙 정렬
+  },
+  timerContainer: {
+    alignItems: 'flex-end',
+    marginBottom: 10,
   },
   timer: {
     fontSize: 16,
-    textAlign: 'right',
-    marginBottom: 10,
     color: '#6EAF7C',
   },
-  email: {
-    marginTop: 10,
+  resendButton: {
+    alignSelf: 'flex-start',
+    marginBottom: 20,
+  },
+  resendText: {
+    color: '#6EAF7C',
     fontSize: 16,
+  },
+  emailLabel: {
+    fontSize: 16,
+    marginBottom: 5,
     color: '#000000',
+  },
+  emailInput: {
+    width: '100%',
+    padding: 15,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 5,
+    backgroundColor: '#F5F5F5',
+  },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center', // 수직 중앙 정렬
+    alignItems: 'center', // 수평 중앙 정렬
+    width: '100%',
   },
 });
 
