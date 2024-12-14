@@ -15,19 +15,20 @@ const Join: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [verificationCode, setVerificationCode] = useState('');
   const [verificationValid, setVerificationValid] = useState(false);
   const [terms, setTerms] = useState([
-    { id: 1, text: '[필수] 만 14세 이상', checked: false },
-    { id: 2, text: '[필수] 서비스 이용약관', checked: false },
-    { id: 3, text: '[선택] 개인정보 처리방침', checked: false },
-    { id: 4, text: '[필수] 민감정보수집 동의', checked: false },
-    { id: 5, text: '[필수] 위치기반 서비스 이용 동의', checked: false },
-    { id: 6, text: '[선택] 마케팅 활용 동의', checked: false },
+    { id: 1, text: "만 14세 이상입니다.", checked: false, expanded: false },
+    { id: 2, text: "서비스 이용약관", checked: false, expanded: false },
+    { id: 3, text: "개인정보 처리방침", checked: false, expanded: false },
+    { id: 4, text: "민감정보수집 동의", checked: false, expanded: false },
+    { id: 5, text: "위치기반 서비스 이용약관", checked: false, expanded: false },
+    { id: 6, text: "마케팅 활용 동의 [선택]", checked: false, expanded: false },
   ]);
   const [allChecked, setAllChecked] = useState(false);
   const [step, setStep] = useState(1);
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleEmailChange = (text: string) => {
     setEmail(text);
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setEmailValid(emailRegex.test(text));
   };
 
@@ -69,6 +70,15 @@ const Join: React.FC<{ navigation: any }> = ({ navigation }) => {
     setGender(selectedGender);
   };
 
+  const termsContent: { [key: string]: string } = {
+    '1': "만 14세 이상이어야 합니다.",
+    '2': "서비스 이용약관에 대한 자세한 내용은 다음과 같습니다...",
+    '3': "개인정보 처리방침에 대한 자세한 내용은 다음과 같습니다...",
+    '4': "민감정보수집 동의에 대한 자세한 내용은 다음과 같습니다...",
+    '5': "위치기반 서비스 이용약관에 대한 자세한 내용은 다음과 같습니다...",
+    '6': "마케팅 활용 동의는 선택 사항이며, 이에 대한 내용은 다음과 같습니다...",
+  };
+
   const toggleAllChecked = () => {
     const newCheckedState = !allChecked;
     setAllChecked(newCheckedState);
@@ -81,6 +91,12 @@ const Join: React.FC<{ navigation: any }> = ({ navigation }) => {
     );
     setTerms(newTerms);
     setAllChecked(newTerms.every(term => term.checked));
+  };
+
+  const toggleTermExpanded = (id: number) => {
+    setTerms(terms.map(term =>
+      term.id === id ? { ...term, expanded: !term.expanded } : term
+    ));
   };
 
   const handleNext = () => {
@@ -113,7 +129,7 @@ const Join: React.FC<{ navigation: any }> = ({ navigation }) => {
         if (verificationValid) setStep(8);
         else Alert.alert('인증번호가 틀렸어요.');
         break;
-        case 8:
+      case 8:
         setStep(9);
         break;
       case 9:
@@ -271,7 +287,7 @@ const Join: React.FC<{ navigation: any }> = ({ navigation }) => {
         </>
       )}
 
-{step === 8 && (
+      {step === 8 && (
         <>
           <Text style={styles.subtitle}>
             입력한 정보를 확인해 주세요
@@ -310,18 +326,29 @@ const Join: React.FC<{ navigation: any }> = ({ navigation }) => {
           </TouchableOpacity>
           <ScrollView style={styles.termsContainer}>
             {terms.map(term => (
-              <TouchableOpacity
-                key={term.id}
-                style={styles.termItem}
-                onPress={() => toggleTermChecked(term.id)}
-              >
-                <MaterialIcons
-                  name={term.checked ? 'check-circle' : 'radio-button-unchecked'}
-                  size={24}
-                  color={term.checked ? '#6BBF8A' : '#B0B0B0'}
-                />
-                <Text style={styles.termText}>{term.text}</Text>
-              </TouchableOpacity>
+              <View key={term.id}>
+                <TouchableOpacity
+                  style={styles.termItem}
+                  onPress={() => toggleTermChecked(term.id)}
+                >
+                  <MaterialIcons
+                    name={term.checked ? 'check-circle' : 'radio-button-unchecked'}
+                    size={24}
+                    color={term.checked ? '#6BBF8A' : '#B0B0B0'}
+                  />
+                  <Text style={styles.termText}>{term.text}</Text>
+                  <TouchableOpacity onPress={() => toggleTermExpanded(term.id)}>
+                    <MaterialIcons
+                      name={term.expanded ? 'expand-less' : 'expand-more'}
+                      size={24}
+                      color="#B0B0B0"
+                    />
+                  </TouchableOpacity>
+                </TouchableOpacity>
+                {term.expanded && (
+                  <Text style={styles.termContent}>{termsContent[term.id.toString()]}</Text>
+                )}
+              </View>
             ))}
           </ScrollView>
         </>
@@ -461,6 +488,7 @@ const styles = StyleSheet.create({
   termItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 10,
     padding: 10,
     borderWidth: 1,
@@ -472,6 +500,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'black',
     flexShrink: 1,
+  },
+  termContent: {
+    marginLeft: 34,
+    color: '#6BBF8A',
+    marginBottom: 10,
   },
 });
 
