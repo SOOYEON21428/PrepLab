@@ -11,7 +11,7 @@ const Main: React.FC = () => {
     setActiveItem(item);
    
   };
-
+// 아이콘 + 배치 수정 예정 (241222)
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
