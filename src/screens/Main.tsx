@@ -1,104 +1,66 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import NavigationBar from '../components/NavigationBar';
 
 const Main: React.FC = () => {
-  const navigation = useNavigation();
-  const [activeItem, setActiveItem] = useState('의약품');
-
-  const handleSelect = (item: string) => {
-    setActiveItem(item);
-   
-  };
-// 아이콘 + 배치 수정 예정 (241222)
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
-          <Text style={styles.title}>필가이드</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-            <TextInput
-              style={styles.searchInput}
-              placeholder="어떤 의약품/영양제를 찾으세요?"
-              editable={false}
-            />
+          <Image style={styles.logo} source={require('../../assets/icon/화면내로고.png')} />
+          <TouchableOpacity>
+            <Image style={styles.notificationIcon} source={require('../../assets/icon/alarm.png')} />
           </TouchableOpacity>
         </View>
 
-        <View style={styles.recommendationBox}>
-          <Text style={styles.recommendationText}>
-            설문을 통해 약과 영양제를 맞춤 추천받아요!
-          </Text>
-          <TouchableOpacity style={styles.recommendationButton}>
-            <Text style={styles.recommendationButtonText}>맞춤 추천받기</Text>
-          </TouchableOpacity>
-          <Image
-            style={styles.recommendationImage}
-            source={{ uri: 'https://via.placeholder.com/60' }}
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="어떤 의약품/영양제를 찾으세요?"
+            editable={false}
           />
         </View>
 
+        <View style={styles.recommendationBox}>
+          <Text style={styles.recommendationText}>필가이드님, 반가워요!</Text>
+          <Text style={styles.recommendationSubText}>가벼운 증상은 스스로 해결해볼까요?</Text>
+          <TouchableOpacity style={styles.recommendationButton}>
+            <Text style={styles.recommendationButtonText}>셀프케어 시작하기</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.symptomIcons}>
+          {['감기/몸살', '코감기', '목감기', '두통', '근육통'].map((symptom, index) => (
+            <View key={index} style={styles.symptomItem}>
+              <Image style={styles.symptomImage} source={{ uri: 'https://via.placeholder.com/50' }} />
+              <Text style={styles.symptomText}>{symptom}</Text>
+            </View>
+          ))}
+        </View>
+
         <View style={styles.medicineSection}>
-          <Text style={styles.sectionTitle}>💊 증상에 따른 약</Text>
+          <Text style={styles.sectionTitle}>💊 이럴 땐, 이런 약</Text>
           <View style={styles.medicineOptions}>
-            <View style={styles.medicineOption}>
-              <Image
-                style={styles.medicineImage}
-                source={{ uri: 'https://via.placeholder.com/50' }}
-              />
-              <Text style={styles.medicineOptionTitle}>일반 의약품</Text>
-              <Text style={styles.medicineOptionDescription}>처방전 없이 구매 가능한 약품</Text>
-            </View>
-            <View style={styles.medicineOption}>
-              <Image
-                style={styles.medicineImage}
-                source={{ uri: 'https://via.placeholder.com/50' }}
-              />
-              <Text style={styles.medicineOptionTitle}>약국 영양제</Text>
-              <Text style={styles.medicineOptionDescription}>약국에서 파는 영양제</Text>
-            </View>
+            {['근육통 완화', '두통 해결'].map((medicine, index) => (
+              <View key={index} style={styles.medicineOption}>
+                <Image style={styles.medicineImage} source={{ uri: 'https://via.placeholder.com/100' }} />
+                <Text style={styles.medicineOptionTitle}>{medicine}</Text>
+              </View>
+            ))}
           </View>
         </View>
 
         <View style={styles.healthColumn}>
           <Text style={styles.sectionTitle}>💡 오늘의 건강 칼럼</Text>
           <View style={styles.healthContent}>
-            <View style={styles.healthItem}>
-              <Image
-                style={styles.healthImage}
-                source={{ uri: 'https://via.placeholder.com/100' }}
-              />
-              <Text style={styles.healthText}>약 복용 시 주의사항</Text>
-            </View>
-            <View style={styles.healthItem}>
-              <Image
-                style={styles.healthImage}
-                source={{ uri: 'https://via.placeholder.com/100' }}
-              />
-              <Text style={styles.healthText}>해열제 교차 복용</Text>
-            </View>
-          </View>
-          <View style={styles.healthContent}>
-            <View style={styles.healthItem}>
-              <Image
-                style={styles.healthImage}
-                source={{ uri: 'https://via.placeholder.com/100' }}
-              />
-              <Text style={styles.healthText}>증상별 생리통약</Text>
-            </View>
-            <View style={styles.healthItem}>
-              <Image
-                style={styles.healthImage}
-                source={{ uri: 'https://via.placeholder.com/100' }}
-              />
-              <Text style={styles.healthText}>약의 보관과 분리수거</Text>
-            </View>
+            {['약 복용 시 주의사항', '해열제 교차 복용'].map((column, index) => (
+              <View key={index} style={styles.healthItem}>
+                <Image style={styles.healthImage} source={{ uri: 'https://via.placeholder.com/100' }} />
+                <Text style={styles.healthText}>{column}</Text>
+              </View>
+            ))}
           </View>
         </View>
       </ScrollView>
-
-      <NavigationBar activeItem={activeItem} onSelect={handleSelect} />
     </View>
   );
 };
@@ -106,55 +68,88 @@ const Main: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ffffff',
   },
   scrollContainer: {
     paddingBottom: 100,
   },
   header: {
-    padding: 20,
-    backgroundColor: '#e0f7fa',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
+    backgroundColor: '#ffffff',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
+  logo: {
+    width: 87,
+    height: 24,
+  },
+  notificationIcon: {
+    width: 20,
+    height: 20,
+  },
+  searchContainer: {
+    padding: 10,
+    backgroundColor: '#fff',
   },
   searchInput: {
     width: '100%',
     padding: 10,
     borderRadius: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f0f0',
     borderColor: '#ddd',
     borderWidth: 1,
   },
   recommendationBox: {
-    margin: 20,
+    width: 370,
+    height: 152,
+    backgroundColor: '#6EAF7C',
+    borderRadius: 24,
+    marginTop: 20,
+    marginLeft:20,
     padding: 20,
-    backgroundColor: '#c8e6c9',
-    borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   recommendationText: {
+    fontSize: 18,
+    fontWeight: 700,
+    marginBottom: 10,
+    color: 'white',
+  },
+  recommendationSubText: {
     fontSize: 16,
-    flex: 1,
+    marginBottom: 20,
+    color: 'white',
+    fontWeight: 600,
   },
   recommendationButton: {
-    backgroundColor: '#6BBF8A',
-    padding: 10,
-    borderRadius: 20,
+    width: 109,
+    height: 30,
+    backgroundColor: '#ffffff',
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   recommendationButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: '#656565',
+    fontWeight: 'regular',
+    fontSize: 12,
+    fontStyle: 'normal',
   },
-  recommendationImage: {
-    width: 60,
-    height: 60,
-    marginLeft: 10,
+  symptomIcons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
+  symptomItem: {
+    alignItems: 'center',
+  },
+  symptomImage: {
+    width: 50,
+    height: 50,
+  },
+  symptomText: {
+    fontSize: 12,
+    marginTop: 5,
   },
   medicineSection: {
     padding: 20,
@@ -170,29 +165,23 @@ const styles = StyleSheet.create({
   },
   medicineOption: {
     width: '48%',
-    padding: 15,
     backgroundColor: '#fff',
     borderRadius: 10,
     alignItems: 'center',
+    padding: 10,
   },
   medicineImage: {
-    width: 50,
-    height: 50,
+    width: '100%',
+    height: 100,
+    borderRadius: 10,
     marginBottom: 10,
   },
   medicineOptionTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
-  },
-  medicineOptionDescription: {
-    fontSize: 14,
-    color: '#555',
-    marginTop: 5,
     textAlign: 'center',
   },
   healthColumn: {
     padding: 20,
-    backgroundColor: '#f5f5f5',
   },
   healthContent: {
     flexDirection: 'row',

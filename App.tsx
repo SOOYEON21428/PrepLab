@@ -9,6 +9,7 @@ import FindId from './src/screens/FindId';
 import FindPassword from './src/screens/FindPassword';
 import Main from './src/screens/Main';
 import Search from './src/screens/Search';
+import NavigationBar from './src/components/NavigationBar';
 
 type RootStackParamList = {
   Splash: undefined;

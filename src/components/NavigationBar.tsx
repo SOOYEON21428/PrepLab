@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 interface NavigationBarProps {
   activeItem: string;
@@ -8,22 +7,24 @@ interface NavigationBarProps {
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ activeItem, onSelect }) => {
-  const items: { name: string; icon: keyof typeof Ionicons.glyphMap }[] = [
-    { name: '의약품', icon: 'medkit-outline' },
-    { name: '복약 달력', icon: 'calendar-outline' },
-    { name: '구급함', icon: 'medkit-outline' },
-    { name: '주변 약국', icon: 'add-circle-outline' },
-    { name: '내 정보', icon: 'person-outline' },
+  const items = [
+    { name: '의약품', icon: require('../../assets/icon/탭바_의약품.png') },
+    { name: '복약 달력', icon: require('../../assets/icon/탭바_복약달력.png') },
+    { name: '구급함', icon: require('../../assets/icon/탭바_구급함.png') },
+    { name: '주변 약국', icon: require('../../assets/icon/탭바_주변약국.png') },
+    { name: '내 정보', icon: require('../../assets/icon/탭바_내정보.png') },
   ];
 
   return (
     <View style={styles.container}>
       {items.map(item => (
         <TouchableOpacity key={item.name} onPress={() => onSelect(item.name)} style={styles.item}>
-          <Ionicons
-            name={item.icon}
-            size={24}
-            color={activeItem === item.name ? '#6DA37E' : '#A0A0A0'}
+          <Image
+            source={item.icon}
+            style={[
+              styles.icon,
+              { tintColor: activeItem === item.name ? '#6DA37E' : '#A0A0A0' }
+            ]}
           />
           <Text style={[styles.text, activeItem === item.name && styles.activeText]}>
             {item.name}
@@ -50,6 +51,10 @@ const styles = StyleSheet.create({
   },
   item: {
     alignItems: 'center',
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
   text: {
     fontSize: 12,
